@@ -16,48 +16,48 @@ jobs:
     steps :
       - checkout
       - restore_cache :
-        keys : [frontend-build]
+          keys : [frontend-build]
       - run : 
-        name : run frontend
-        command : |
-          cd frontend
-          npm install
-          npm run build
-          npm run start
+          name : run frontend
+          command : |
+            cd frontend
+            npm install
+            npm run build
+            npm run start
       - save-cache :
-        paths : [frontend/node_modules]
-        key : [fontend-build]
+          paths : [frontend/node_modules]
+          key : [fontend-build]
   backend :
     docker :
       - image: circleci/node:13.8.0
     steps :
       - checkout
       - restore_cache :
-        keys : [backend-build]
+          keys : [backend-build]
       - run :
-        name : run backend
-        command : |
-          cd backend
-          npm install
-          npm run build
-          npm run start
+          name : run backend
+          command : |
+            cd backend
+            npm install
+            npm run build
+            npm run start
       - save-cache :
-        paths : [backend/node_modules]
-        key : [backend-build]
-  start_database :
+          paths : [backend/node_modules]
+          key : [backend-build]
+  start-database :
     steps :
       - checkout
       - run :
-        name : run database
-        command : |
-          cd backend/util
-          docker-compose up
+          name : run database
+          command : |
+            cd backend/util
+            docker-compose up
 workflows:
   default :
     jobs :
       - hello-world
   runapp :
     jobs :
-      - start_database
+      - start-database
       - backend 
       - frontend
