@@ -10,8 +10,57 @@ jobs:
           name: Say Hello
           command: |
             echo "Hello World"
-
+  frontend :
+    docker :
+      - image: circleci/node:13.8.0
+    steps :
+      -checkout
+      -restore_cache :
+        keys : [frontend-build]
+      -run : 
+        name : run frontend
+        command : |
+        cd frontend
+        npm install
+        npm run build
+        npm run start
+      -save-cache :
+        paths : [frontend/node_modules]
+        key : [fontend-build]
+  backend :
+    docker :
+      - image: circleci/node:13.8.0
+    steps :
+      -checkout
+      -restore_cache :
+        keys : [backend-build]
+      -run :
+        name : run backend
+        command : |
+        cd backend
+        npm install
+        npm run build
+        npm run start
+      -save-cache :
+        paths : [backend/node_modules]
+        key : [backend-build]
+  startdatabase :
+    steps :
+      -checkout
+      -run :
+        name : run database
+        command : |
+        cd backend/util
+        docker-compose up
 workflows:
   default:
     jobs:
       - hello-world
+  runapp:
+    jobs :
+      - backend 
+          requires :
+            - startdatabase
+      - frontend
+          requires :
+            - backend
