@@ -20,10 +20,10 @@ jobs:
       - run : 
         name : run frontend
         command : |
-        cd frontend
-        npm install
-        npm run build
-        npm run start
+          cd frontend
+          npm install
+          npm run build
+          npm run start
       - save-cache :
         paths : [frontend/node_modules]
         key : [fontend-build]
@@ -37,10 +37,10 @@ jobs:
       - run :
         name : run backend
         command : |
-        cd backend
-        npm install
-        npm run build
-        npm run start
+          cd backend
+          npm install
+          npm run build
+          npm run start
       - save-cache :
         paths : [backend/node_modules]
         key : [backend-build]
@@ -50,8 +50,8 @@ jobs:
       - run :
         name : run database
         command : |
-        cd backend/util
-        docker-compose up
+          cd backend/util
+          docker-compose up
 workflows:
   default:
     jobs:
