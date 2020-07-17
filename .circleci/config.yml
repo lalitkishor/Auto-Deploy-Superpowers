@@ -44,20 +44,11 @@ jobs:
       - save-cache :
           paths : [backend/node_modules]
           key : [backend-build]
-  start-database :
-    steps :
-      - checkout
-      - run :
-          name : run database
-          command : |
-            cd backend/util
-            docker-compose up
 workflows:
   default :
     jobs :
       - hello-world
   runapp :
     jobs :
-      - start-database
       - backend 
       - frontend
