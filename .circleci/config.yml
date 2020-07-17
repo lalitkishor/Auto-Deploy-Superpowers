@@ -53,11 +53,12 @@ jobs:
           cd backend/util
           docker-compose up
 workflows:
-  default:
-    jobs:
-      - hello-world
-  runapp:
+  default :
     jobs :
+      - hello-world
+  runapp :
+    jobs :
+      - startdatabase
       - backend 
           requires :
             - startdatabase
