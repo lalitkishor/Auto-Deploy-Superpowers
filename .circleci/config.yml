@@ -44,7 +44,7 @@ jobs:
       - save-cache :
         paths : [backend/node_modules]
         key : [backend-build]
-  startdatabase :
+  start_database :
     steps :
       - checkout
       - run :
@@ -58,10 +58,6 @@ workflows:
       - hello-world
   runapp :
     jobs :
-      - startdatabase
+      - start_database
       - backend 
-          requires :
-            - startdatabase
       - frontend
-          requires :
-            - backend
